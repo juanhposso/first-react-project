@@ -1,45 +1,73 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
+import calcularTotal from '../helpers';
 
-const Formulario = () => {
-	const [cantidad, guardarCantidad] = useState(0);
+const Formulario = (props) => {
+	const {
+		cantidad,
+		guardarCantidad,
+		plazo,
+		guardarPlazo,
+		total,
+		guardarTotal,
+	} = props;
 
-	const leerCantidad = (event) => {
-		guardarCantidad(Number(event.target.value));
-		console.log(Number(event.target.value));
+	const [error, guardarError] = useState(false);
+
+	const calcularPrestamo = (event) => {
+		event.preventDefault();
+
+		if (cantidad === 0 || plazo === '') {
+			guardarError(true);
+			return;
+		}
+
+		guardarError(false);
+
+		const totalCalculado = calcularTotal(cantidad, plazo);
+
+		guardarTotal(totalCalculado);
 	};
 
 	return (
-		<form>
-			{cantidad}
-			<div className="row">
-				<div>
-					<label>Cantidad Prestamo</label>
-					<input
-						className="u-full-width"
-						type="number"
-						placeholder="Ejemplo: 3000"
-						onChange={leerCantidad}
-					/>
+		<Fragment>
+			<form onSubmit={calcularPrestamo}>
+				<div className="row">
+					<div>
+						<label>Cantidad Prestamo</label>
+						<input
+							className="u-full-width"
+							type="number"
+							placeholder="Ejemplo: 3000"
+							onChange={(event) => guardarCantidad(Number(event.target.value))}
+						/>
+					</div>
+					<div>
+						<label>Plazo para Pagar</label>
+						<select
+							className="u-full-width"
+							onChange={(event) => guardarPlazo(Number(event.target.value))}
+						>
+							<option value="">Seleccionar</option>
+							<option value="3">3 meses</option>
+							<option value="6">6 meses</option>
+							<option value="12">12 meses</option>
+							<option value="24">24 meses</option>
+						</select>
+					</div>
+					<div>
+						<input
+							type="submit"
+							value="Calcular"
+							className="button-primary u-full-width"
+						/>
+					</div>
 				</div>
-				<div>
-					<label>Plazo para Pagar</label>
-					<select className="u-full-width">
-						<option value="">Seleccionar</option>
-						<option value="3">3 meses</option>
-						<option value="6">6 meses</option>
-						<option value="12">12 meses</option>
-						<option value="24">24 meses</option>
-					</select>
-				</div>
-				<div>
-					<input
-						type="submit"
-						value="Calcular"
-						className="button-primary u-full-width"
-					/>
-				</div>
-			</div>
-		</form>
+			</form>
+
+			{error ? (
+				<p className="error">Todos los campos son obligatoriois</p>
+			) : null}
+		</Fragment>
 	);
 };
 
