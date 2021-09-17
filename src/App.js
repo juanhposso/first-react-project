@@ -9,13 +9,6 @@ function App() {
 	const [plazo, guardarPlazo] = useState('');
 	const [total, guardarTotal] = useState(0);
 
-	let componente;
-	if (total === 0) {
-		componente = <Mensaje />;
-	} else {
-		componente = <Resultado total={total} plazo={plazo} cantidad={cantidad} />;
-	}
-
 	return (
 		<Fragment>
 			<Header titulo="Hola mundito" />
@@ -28,7 +21,13 @@ function App() {
 					total={total}
 					guardarTotal={guardarTotal}
 				/>
-				<div className="mensajes">{componente}</div>
+				<div className="mensajes">
+					{total === 0 ? (
+						<Mensaje />
+					) : (
+						<Resultado total={total} plazo={plazo} cantidad={cantidad} />
+					)}
+				</div>
 			</div>
 		</Fragment>
 	);

@@ -2,17 +2,12 @@ import { Fragment, useState } from 'react';
 import calcularTotal from '../helpers';
 
 const Formulario = (props) => {
-	const {
-		cantidad,
-		guardarCantidad,
-		plazo,
-		guardarPlazo,
-		total,
-		guardarTotal,
-	} = props;
+	const { cantidad, guardarCantidad, plazo, guardarPlazo, guardarTotal } =
+		props;
 
 	const [error, guardarError] = useState(false);
 
+	// * Se activa cuando damos click en submit
 	const calcularPrestamo = (event) => {
 		event.preventDefault();
 
