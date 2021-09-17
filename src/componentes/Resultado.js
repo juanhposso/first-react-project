@@ -5,7 +5,7 @@ const Resultado = ({ total, plazo, cantidad }) => {
 			<p>La cantidad solicitada es: ${cantidad}</p>
 			<p>El plazo a pagar es: {plazo} meses</p>
 			<p>Su pago mensual seria de: ${(total / plazo).toFixed(2)}</p>
-			<p>Total a pagar: {total.toFixed(2)}</p>
+			<p>Total a pagar: ${total.toFixed(2)}</p>
 		</div>
 	);
 };
